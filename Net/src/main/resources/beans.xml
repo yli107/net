@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- services -->
+
+	<bean id="config" class="edu.study.net.tcp.Config">
+		<constructor-arg type ="java.lang.String" value = "120.0.0.1"/>
+		
+		<constructor-arg type ="java.lang.Integer" value = "9999"/>
+	</bean>
+</bean>
+	<!-- more bean definitions for services go here -->
+
+</beans>
+
