@@ -1,5 +1,6 @@
 package edu.study.net.tcp;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -8,35 +9,45 @@ import java.net.Socket;
 public class TcpServerDemo01 {
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;
+		Socket socket = null;
 		InputStream is = null;
+		ByteArrayOutputStream baos = null;
 		try {
+			// 1.创建一个可使用的端口
 			serverSocket = new ServerSocket(9999);
-			Socket accept = serverSocket.accept();
-			is = accept.getInputStream();
-			byte[] buffer = new byte[10];
+			
+			// 2.等待客户端连接发送socket
+			socket = serverSocket.accept();
+			
+			// 3.读取客户端发送过来的socket的消息
+			is = socket.getInputStream();
+			
+			// 4.将bytes转成String
+			baos = new ByteArrayOutputStream();
+			byte[] buffer = new byte[1024];
 			int len;
-			StringBuilder sb = new StringBuilder();
 			while ((len = is.read(buffer)) != -1) {
-				sb.append(new String(buffer, 0, len));
+				baos.write(buffer, 0, len);
 			}
-			System.out.println(sb.toString());
-
-			accept.close();
+			System.out.println(baos.toString());
+			
+			// 5.关闭InputStream, Socket和ServerSocket
 			is.close();
+			socket.close();
 			serverSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-
-		try {
-			is.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			serverSocket.close();
-		} catch (IOException e) { 
-			e.printStackTrace();
+		} finally {
+			try {
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				serverSocket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

@@ -7,16 +7,27 @@ import java.net.Socket;
 
 public class TcpClientDemo01 {
 	public static void main(String[] args) {
-		InetAddress inetAddress = null;
+
 		Socket socket = null;
 		OutputStream os = null;
 		try {
-			inetAddress = InetAddress.getByName("10.1.15.113/24");
+			InetAddress inetAddress = InetAddress.getByName("127.0.0.1");
 			socket = new Socket(inetAddress, 9999);
 			os = socket.getOutputStream();
 			os.write("Hello MFK".getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				os.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				socket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
