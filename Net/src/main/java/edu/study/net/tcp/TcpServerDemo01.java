@@ -30,7 +30,6 @@ public class TcpServerDemo01 {
 				baos.write(buffer, 0, len);
 			}
 			System.out.println(baos.toString());
-			
 			// 5.¹Ø±ÕInputStream, SocketºÍServerSocket
 			is.close();
 			socket.close();
