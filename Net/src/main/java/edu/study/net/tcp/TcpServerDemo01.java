@@ -13,16 +13,12 @@ public class TcpServerDemo01 {
 		InputStream is = null;
 		ByteArrayOutputStream baos = null;
 		try {
-			// 1.创建一个可使用的端口
 			serverSocket = new ServerSocket(9999);
 			
-			// 2.等待客户端连接发送socket
 			socket = serverSocket.accept();
 			
-			// 3.读取客户端发送过来的socket的消息
 			is = socket.getInputStream();
 			
-			// 4.将bytes转成String
 			baos = new ByteArrayOutputStream();
 			byte[] buffer = new byte[1024];
 			int len;
@@ -30,7 +26,6 @@ public class TcpServerDemo01 {
 				baos.write(buffer, 0, len);
 			}
 			System.out.println(baos.toString());
-			// 5.关闭InputStream, Socket和ServerSocket
 			is.close();
 			socket.close();
 			serverSocket.close();
