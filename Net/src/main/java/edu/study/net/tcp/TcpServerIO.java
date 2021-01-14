@@ -3,6 +3,7 @@ package edu.study.net.tcp;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -31,21 +32,53 @@ public class TcpServerIO {
 		return port;
 	}
 
-	public String accept() throws IOException {
-		ServerSocket serverSocket = new ServerSocket(port);
-		Socket socket = serverSocket.accept();
-		InputStream is = socket.getInputStream();
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[1024];
-		int len;
-		while ((len = is.read(buffer)) != -1) {
-			baos.write(buffer, 0, len);
-		}
+	public String accept() {
+		ServerSocket serverSocket = null;
+		Socket socket = null;
+		InputStream is = null;
+		ByteArrayOutputStream baos = null;
+		OutputStream os = null;
+		String info = null;
 
-		baos.close();
-		is.close();
-		socket.close();
-		serverSocket.close();
-		return baos.toString();
+		try {
+			// 创建接口
+			serverSocket = new ServerSocket(port);
+ 
+			while (true) {
+				// 等待客户端发送的socket
+				socket = serverSocket.accept();
+
+				// 读取字节数据并储存为String
+				is = socket.getInputStream();
+				baos = new ByteArrayOutputStream();
+				byte[] buffer = new byte[1024];
+				int len;
+				while ((len = is.read(buffer)) != -1) {
+					baos.write(buffer, 0, len);
+				}
+				info = baos.toString();
+
+				// 返回确认信息
+				os = socket.getOutputStream();
+				os.write("发送成功".getBytes());
+
+				socket.shutdownOutput();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭管道
+			try {
+				os.close();
+				baos.close();
+				is.close();
+				socket.close();
+				serverSocket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return info;
 	}
 }

@@ -1,7 +1,6 @@
 package edu.study.net.tcp;
 
 import static org.junit.Assert.*;
-
 import java.io.IOException;
 
 import org.junit.Before;
@@ -18,11 +17,11 @@ public class TestTcpServer01 {
 	@Test
 	public void test() throws IOException {
 		assertEquals("String", serverIO.accept());
-		assertEquals("String1", serverIO.accept());
-		assertEquals("String2", serverIO.accept());
-		assertEquals("String3", serverIO.accept());
-		assertEquals("~!@#$%^&*()_+|}{:?><,./;'[]\'", serverIO.accept());
-		assertEquals("1234567890", serverIO.accept());
+//		assertEquals("String1", serverIO.accept());
+//		assertEquals("String2", serverIO.accept());
+//		assertEquals("String3", serverIO.accept());
+//		assertEquals("~!@#$%^&*()_+|}{:?><,./;'[]\'", serverIO.accept());
+//		assertEquals("1234567890", serverIO.accept());
 	}
 
 }
