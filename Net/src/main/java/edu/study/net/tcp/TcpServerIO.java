@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class TcpServerIO {
 
@@ -32,13 +33,13 @@ public class TcpServerIO {
 		return port;
 	}
 
-	public String accept() {
+	public ArrayList<String> acceptStrings() {
 		ServerSocket serverSocket = null;
 		Socket socket = null;
 		InputStream is = null;
 		ByteArrayOutputStream baos = null;
 		OutputStream os = null;
-		String info = null;
+		ArrayList<String> stringList = new ArrayList<String>();
 
 		try {
 			// 创建接口
@@ -56,7 +57,7 @@ public class TcpServerIO {
 				while ((len = is.read(buffer)) != -1) {
 					baos.write(buffer, 0, len);
 				}
-				info = baos.toString();
+				stringList.add(baos.toString());
 
 				// 返回确认信息
 				os = socket.getOutputStream();
@@ -79,6 +80,6 @@ public class TcpServerIO {
 			}
 
 		}
-		return info;
+		return stringList;
 	}
 }
