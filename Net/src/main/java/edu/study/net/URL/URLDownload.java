@@ -26,6 +26,6 @@ public class URLDownload {
 			fos.write(buf, 0, len);
 		}
 		
-		
+		fos.close();
 	}
 }
